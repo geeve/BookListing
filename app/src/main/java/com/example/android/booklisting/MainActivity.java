@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this,BookListActivity.class);
 
                 //将搜索关键字传到另一个Activity
-                i.putExtra("keyWord",mKeyWord.getText());
+                i.putExtra("keyWord",mKeyWord.getText().toString());
 
 
                 //startActivity(i);

@@ -2,9 +2,7 @@ package com.example.android.booklisting;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,32 +10,34 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
+
+import java.util.HashMap;
 import java.util.List;
+
+
 
 /**
  * Created by Administrator on 2017/6/15 0015.
  * com.example.android.booklisting,BookListing
  */
 
-public class BookAdapter extends BaseAdapter {
+public class BookAdapter extends BaseAdapter{
 
-    /*the resualt of the reasrch*/
+    /**the resualt of the reasrch*/
     private List<Book> mBooks;
 
     private Context mContext;
+
+    private BookViewHolder mBookViewHoler;
+
+    //用来存放已经得到过的图片
+    private HashMap<String,Bitmap> mImageTempMap;
 
     public BookAdapter(Context context, List<Book> books) {
         super();
         this.mBooks = books;
         this.mContext = context;
+        mImageTempMap = new HashMap<String,Bitmap>();
     }
 
     public void setBooks(List<Book> books){
@@ -64,7 +64,7 @@ public class BookAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         //使用View Holder模式节省内存
-        BookViewHolder bookViewHolder = new BookViewHolder();
+        mBookViewHoler = new BookViewHolder();
 
         View currentView = view;
 
@@ -72,77 +72,28 @@ public class BookAdapter extends BaseAdapter {
         if(currentView == null){
             currentView = LayoutInflater.from(mContext).inflate(R.layout.book_list_item,viewGroup,false);
 
-            bookViewHolder.ivBookCover = (ImageView) currentView.findViewById(R.id.iv_book_cover);
-            bookViewHolder.tvBookAuthor = (TextView) currentView.findViewById(R.id.tv_author);
-            bookViewHolder.tvBookName = (TextView) currentView.findViewById(R.id.tv_book_name);
-            bookViewHolder.tvBookPublisher = (TextView) currentView.findViewById(R.id.tv_publisher);
+            mBookViewHoler.ivBookCover = (ImageView) currentView.findViewById(R.id.iv_book_cover);
+            mBookViewHoler.tvBookAuthor = (TextView) currentView.findViewById(R.id.tv_author);
+            mBookViewHoler.tvBookName = (TextView) currentView.findViewById(R.id.tv_book_name);
+            mBookViewHoler.tvBookPublisher = (TextView) currentView.findViewById(R.id.tv_publisher);
 
-            currentView.setTag(bookViewHolder);
+            currentView.setTag(mBookViewHoler);
         }else{
-            bookViewHolder = (BookViewHolder) currentView.getTag();
+            mBookViewHoler = (BookViewHolder) currentView.getTag();
         }
 
 
-        NewsAsyncTask task = new NewsAsyncTask(bookViewHolder.ivBookCover);
+        BookImageLoader task = new BookImageLoader(mBookViewHoler.ivBookCover,mImageTempMap);
         task.execute(mBooks.get(i).getmBookCoverUrl());
 
-        bookViewHolder.tvBookPublisher.setText(mBooks.get(i).getmBookPublisher());
-        bookViewHolder.tvBookName.setText(mBooks.get(i).getmBookName());
-        bookViewHolder.tvBookAuthor.setText(mBooks.get(i).getmBookAuthor());
+
+        mBookViewHoler.ivBookCover.setTag(mBooks.get(i).getmBookCoverUrl());
+
+        mBookViewHoler.tvBookPublisher.setText(mBooks.get(i).getmBookPublisher());
+        mBookViewHoler.tvBookName.setText(mBooks.get(i).getmBookName());
+        mBookViewHoler.tvBookAuthor.setText(mBooks.get(i).getmBookAuthor());
 
         return currentView;
     }
-
-    //从网路上获取图片
-    class NewsAsyncTask extends AsyncTask<String,Void,Bitmap> {
-        private ImageView mImageView;
-        public NewsAsyncTask(ImageView imageView) {
-            super();
-            this.mImageView = imageView;
-        }
-
-        //String...params是可变参数接受execute中传过来的参数
-        @Override
-        protected Bitmap doInBackground(String... params) {
-
-            //这里同样调用我们的getBitmapFromeUrl
-            Bitmap bitmap = null;
-            try {
-                bitmap = getBitmapFromUrl(params[0]);
-            } catch (IOException e) {
-                Log.e(this.getClass().getSimpleName(),"get image error!",e);
-            }
-            return bitmap;
-        }
-        //这里的bitmap是从doInBackgroud中方法中返回过来的
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            mImageView.setImageBitmap(bitmap);
-        }
-
-        private Bitmap getBitmapFromUrl(String urlString) throws IOException {
-            Bitmap bm = null;
-            BufferedInputStream bis = null;
-            InputStream is = null;
-            try {
-                URL aURL = new URL(urlString);
-                URLConnection conn = aURL.openConnection();
-                conn.connect();
-                is = conn.getInputStream();
-                bis = new BufferedInputStream(is);
-                bm = BitmapFactory.decodeStream(bis);
-            } catch (IOException e) {
-                Log.e(this.getClass().getSimpleName(), "Error getting bitmap", e);
-            }finally {
-                if(bis !=null){
-                    bis.close();
-                }
-                if(is != null){
-                    is.close();
-                }
-            }
-            return bm;
-        }
-    }
+    
 }

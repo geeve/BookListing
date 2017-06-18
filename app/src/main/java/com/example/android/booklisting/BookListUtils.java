@@ -16,9 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.List;
 
-import static android.R.attr.author;
 
 /**
  * Created by Administrator on 2017/6/15 0015.
@@ -33,7 +31,7 @@ public class BookListUtils {
 
     /***
      * get the data from internat
-     * @param requestUrl
+     * @param requestUrl the url of the book
      * @return
      */
     public static ArrayList<Book> fetchBookData(String requestUrl){
@@ -54,7 +52,7 @@ public class BookListUtils {
 
     /***
      * make URL object from string url
-     * @param stringUrl
+     * @param stringUrl the url from fechBookData
      * @return
      */
     private static URL createUrl(String stringUrl){
@@ -71,7 +69,7 @@ public class BookListUtils {
 
     /***
      * Make an HTTP request to the given URL and return a String as the response.
-     * @param url
+     * @param url the url of the book
      * @return
      * @throws IOException
      */
@@ -186,7 +184,7 @@ public class BookListUtils {
                     if(volumInfo.has("publisher")){
                         bookPublisher = volumInfo.getString("publisher");
                     }else{
-                        bookPublisher = "未知";
+                        bookPublisher = "未知出版商";
                     }
 
                     String bookImage;

@@ -8,24 +8,25 @@
 
     <LinearLayout
         android:id="@+id/key_word_panl"
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/search_key_word"
-            android:gravity="center_vertical"
-            android:layout_width="200dp"
+            android:layout_width="@dimen/search_word_width"
             android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
             tools:text="type the key word" />
         <ImageButton
-            android:clickable="true"
             android:id="@+id/ib_search"
-            android:src="@drawable/ic_search_black_18dp"
-            android:gravity="center_vertical"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:src="@drawable/ic_search_black_18dp" />
     </LinearLayout>
 
 

@@ -2,10 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
+    android:paddingTop="@dimen/list_padding"
+    android:paddingBottom="@dimen/list_padding"
+    android:paddingLeft="@dimen/list_padding"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <ImageView
+        android:layout_gravity="center"
         android:id="@+id/iv_book_cover"
         android:layout_weight="1"
         android:layout_width="0dp"
@@ -18,16 +22,22 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:textAppearance="?android:textAppearance"
             android:id="@+id/tv_book_name"
             tools:text="Book Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_marginTop="@dimen/list_text_margin"
+            android:textAppearance="?android:textAppearanceSmall"
             android:id="@+id/tv_author"
             tools:text="Author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_marginTop="@dimen/list_text_margin"
+            android:layout_marginBottom="@dimen/list_text_margin"
+            android:textAppearance="?android:textAppearanceSmall"
             android:id="@+id/tv_publisher"
             tools:text="Publisher"
             android:layout_width="wrap_content"
