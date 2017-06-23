@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".BookListActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize">
         </activity>
     </application>
 

@@ -31,19 +31,19 @@ public class Book {
 
     }
 
-    public String getmBookCoverUrl() {
+    public String getBookCoverUrl() {
         return mBookCoverUrl;
     }
 
-    public String getmBookName() {
+    public String getBookName() {
         return mBookName;
     }
 
-    public String getmBookAuthor() {
+    public String getBookAuthor() {
         return mBookAuthor;
     }
 
-    public String getmBookPublisher() {
+    public String getBookPublisher() {
         return mBookPublisher;
     }
 }

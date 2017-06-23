@@ -9,11 +9,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +64,12 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 
         listView.setEmptyView(mEmptyView);
 
-        mRequestUrl = String.format("https://www.googleapis.com/books/v1/volumes?q=%s&maxResults=%d",keyWord,20);
+        try {
+            mRequestUrl = String.format("https://www.googleapis.com/books/v1/volumes?q=%s&maxResults=%d", URLEncoder.encode(keyWord,"UTF-8"),20);
+        } catch (UnsupportedEncodingException e) {
+            Log.e(getClass().getSimpleName(),"RequestUrl error!",e);
+        }
+
 
         //new BooksAsyncTask().execute(mRequestUrl);
         //判断网络是否连接，如果连接加载Loader，没连接设置提示空视图中的内容

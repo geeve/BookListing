@@ -84,14 +84,14 @@ public class BookAdapter extends BaseAdapter{
 
 
         BookImageLoader task = new BookImageLoader(mBookViewHoler.ivBookCover,mImageTempMap);
-        task.execute(mBooks.get(i).getmBookCoverUrl());
+        task.execute(mBooks.get(i).getBookCoverUrl());
 
 
-        mBookViewHoler.ivBookCover.setTag(mBooks.get(i).getmBookCoverUrl());
+        mBookViewHoler.ivBookCover.setTag(mBooks.get(i).getBookCoverUrl());
 
-        mBookViewHoler.tvBookPublisher.setText(mBooks.get(i).getmBookPublisher());
-        mBookViewHoler.tvBookName.setText(mBooks.get(i).getmBookName());
-        mBookViewHoler.tvBookAuthor.setText(mBooks.get(i).getmBookAuthor());
+        mBookViewHoler.tvBookPublisher.setText(mBooks.get(i).getBookPublisher());
+        mBookViewHoler.tvBookName.setText(mBooks.get(i).getBookName());
+        mBookViewHoler.tvBookAuthor.setText(mBooks.get(i).getBookAuthor());
 
         return currentView;
     }

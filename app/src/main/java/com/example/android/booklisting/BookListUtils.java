@@ -17,6 +17,8 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
+import static android.R.attr.author;
+
 
 /**
  * Created by Administrator on 2017/6/15 0015.
@@ -155,19 +157,19 @@ public class BookListUtils {
 
         try {
             JSONObject baseJsonResponse = new JSONObject(bookJson);
-            JSONArray itemsJsonArray = baseJsonResponse.getJSONArray("items");
+            JSONArray itemsJsonArray = baseJsonResponse.getJSONArray(Constant.Jsonkey.items);
 
             if(itemsJsonArray.length() > 0){
                 for(int i = 0;i<itemsJsonArray.length();i++){
                     JSONObject firstItem = itemsJsonArray.getJSONObject(i);
-                    JSONObject volumInfo = firstItem.getJSONObject("volumeInfo");
+                    JSONObject volumInfo = firstItem.getJSONObject(Constant.Jsonkey.volumeInfo);
 
-                    String bookName = volumInfo.getString("title");
+                    String bookName = volumInfo.getString(Constant.Jsonkey.title);
 
                     //书籍作者可能不止一人
                     String author="";
-                    if(volumInfo.has("authors")){
-                        JSONArray bookAuthorArray = volumInfo.getJSONArray("authors");
+                    if(volumInfo.has(Constant.Jsonkey.authors)){
+                        JSONArray bookAuthorArray = volumInfo.getJSONArray(Constant.Jsonkey.authors);
 
                         if(bookAuthorArray.length()>1){
                             author = bookAuthorArray.getString(0) + "..";
@@ -175,22 +177,22 @@ public class BookListUtils {
                             author = bookAuthorArray.getString(0);
                         }
                     }else{
-                        author="佚名";
+                        author=Constant.Jsonkey.noAuthors;
                     }
 
 
 
                     String bookPublisher;
-                    if(volumInfo.has("publisher")){
-                        bookPublisher = volumInfo.getString("publisher");
+                    if(volumInfo.has(Constant.Jsonkey.publisher)){
+                        bookPublisher = volumInfo.getString(Constant.Jsonkey.publisher);
                     }else{
-                        bookPublisher = "未知出版商";
+                        bookPublisher = Constant.Jsonkey.noPublisher;
                     }
 
                     String bookImage;
-                    if(volumInfo.has("imageLinks")) {
-                        JSONObject imageLink = volumInfo.getJSONObject("imageLinks");
-                        bookImage = imageLink.getString("smallThumbnail");  //或者使用thumbnail的图片
+                    if(volumInfo.has(Constant.Jsonkey.imageLinks)) {
+                        JSONObject imageLink = volumInfo.getJSONObject(Constant.Jsonkey.imageLinks);
+                        bookImage = imageLink.getString(Constant.Jsonkey.smallThumbnail);  //或者使用thumbnail的图片
                     }else{
                         bookImage = "";
                     }
